@@ -20,7 +20,7 @@ namespace Gameplay.Character.Movement
         #region PROPERTIES
 
         public bool IsMoving => direction != Vector2.zero;
-        public bool IsGrounded => CharacterTransform == null ? false : Physics.Raycast(CharacterTransform.position, Vector3.down, Character.CharacterInGame.CharacterController.height * 0.5f + 0.2f);
+        public bool IsGrounded => CharacterTransform == null ? false : Physics.Raycast(CharacterTransform.position, Vector3.down, 0.1f);
         protected Transform CharacterTransform => Character.CharacterInGame ? Character.CharacterInGame.transform : null;
         protected CharacterController CharacterController => Character.CharacterInGame != null ? Character.CharacterInGame.CharacterController : null;
 
