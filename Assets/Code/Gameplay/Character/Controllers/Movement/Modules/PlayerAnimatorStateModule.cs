@@ -1,4 +1,6 @@
 
+using Gameplay.Inputs;
+
 namespace Gameplay.Character.Movement
 {
     public class PlayerAnimatorStateModule : CharacterAnimatorStateModule
@@ -16,14 +18,23 @@ namespace Gameplay.Character.Movement
         public override void AttachEvents()
         {
             base.AttachEvents();
-            //TODO dodaæ reakcje na inputy
+            if (InputManager.Instance)
+            {
+                InputManager.Instance.CharacterInputs.OnMoveInDirection += MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnActionPreparing += HandlePreparingAction;
+                InputManager.Instance.CharacterInputs.OnActionTriggered += HandleActionTriggered;
+            }
         }
 
         public override void DetachEvents()
         {
             base.DetachEvents();
-            //TODO dodaæ reakcje na inputy
-
+            if (InputManager.Instance)
+            {
+                InputManager.Instance.CharacterInputs.OnMoveInDirection -= MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnActionPreparing -= HandlePreparingAction;
+                InputManager.Instance.CharacterInputs.OnActionTriggered -= HandleActionTriggered;
+            }
         }
 
         #endregion

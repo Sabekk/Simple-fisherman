@@ -52,6 +52,21 @@ namespace Gameplay.Character.Movement
             CharacterAnimator.SetFloat(MoveDirectionY, yDir);
         }
 
+
+        #region HANDLERS
+
+        protected virtual void HandlePreparingAction()
+        {
+
+        }
+
+        protected virtual void HandleActionTriggered()
+        {
+
+        }
+
+        #endregion
+
         #endregion
     }
 }

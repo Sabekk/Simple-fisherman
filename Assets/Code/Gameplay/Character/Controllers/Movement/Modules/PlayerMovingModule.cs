@@ -1,4 +1,5 @@
 using Gameplay.Cameras;
+using Gameplay.Inputs;
 using UnityEngine;
 
 namespace Gameplay.Character.Movement
@@ -21,13 +22,21 @@ namespace Gameplay.Character.Movement
         public override void AttachEvents()
         {
             base.AttachEvents();
-            //TODO dodaæ reakcjê na inputy
+            if (InputManager.Instance)
+            {
+                InputManager.Instance.CharacterInputs.OnMoveInDirection += HandleMoveInDirection;
+                InputManager.Instance.CharacterInputs.OnLookInDirection += HandleLookInDirection;
+            }
         }
 
         public override void DetachEvents()
         {
             base.DetachEvents();
-            //TODO dodaæ reakcjê na inputy
+            if (InputManager.Instance)
+            {
+                InputManager.Instance.CharacterInputs.OnMoveInDirection -= HandleMoveInDirection;
+                InputManager.Instance.CharacterInputs.OnLookInDirection -= HandleLookInDirection;
+            }
         }
 
         protected override void RotateCharacterByLookDirection()

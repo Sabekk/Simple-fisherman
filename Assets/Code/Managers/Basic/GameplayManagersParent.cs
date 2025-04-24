@@ -1,5 +1,6 @@
 using Gameplay.Cameras;
 using Gameplay.Character;
+using Gameplay.Inputs;
 
 public class GameplayManagersParent : ManagersParent
 {
@@ -17,6 +18,7 @@ public class GameplayManagersParent : ManagersParent
     {
         managers.Add(CamerasManager.Instance);
         managers.Add(CharacterManager.Instance);
+        managers.Add(InputManager.Instance);
     }
 
     #endregion
