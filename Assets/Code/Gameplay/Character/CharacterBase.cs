@@ -1,3 +1,4 @@
+using Database;
 using Database.Character.Data;
 using Gameplay.Character.Movement;
 using System;
@@ -34,7 +35,8 @@ namespace Gameplay.Character
         {
             get
             {
-                //TODO wyszukiwanie data z bazy po dataId
+                if (data == null)
+                    data = MainDatabases.Instance.CharacterDataDatabase.GetData(dataId);
                 return data;
             }
         }
@@ -87,7 +89,7 @@ namespace Gameplay.Character
 
         public void SetData(CharacterData data)
         {
-            //dataId = data.Id;
+            dataId = data.Id;
             this.data = data;
         }
 
@@ -104,7 +106,10 @@ namespace Gameplay.Character
             if (characterInGame != null)
                 return true;
 
-            //TODO spawn postaci z pliku data z bazy
+            var rawCharacter = UnityEngine.Object.Instantiate(Data.CharacterInGamePrefab);
+            if (rawCharacter)
+                characterInGame = rawCharacter.GetComponent<CharacterInGame>();
+
             if (characterInGame != null)
             {
                 characterInGame.Initialize(this);

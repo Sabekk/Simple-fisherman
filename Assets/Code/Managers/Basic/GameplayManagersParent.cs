@@ -1,4 +1,5 @@
 using Gameplay.Cameras;
+using Gameplay.Character;
 
 public class GameplayManagersParent : ManagersParent
 {
@@ -15,6 +16,7 @@ public class GameplayManagersParent : ManagersParent
     protected override void SetManagers()
     {
         managers.Add(CamerasManager.Instance);
+        managers.Add(CharacterManager.Instance);
     }
 
     #endregion
