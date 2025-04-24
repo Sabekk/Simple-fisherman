@@ -1,3 +1,5 @@
+using Gameplay.Cameras;
+
 public class GameplayManagersParent : ManagersParent
 {
     #region VARIABLES
@@ -12,7 +14,7 @@ public class GameplayManagersParent : ManagersParent
 
     protected override void SetManagers()
     {
-
+        managers.Add(CamerasManager.Instance);
     }
 
     #endregion
