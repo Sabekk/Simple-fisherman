@@ -1,11 +1,12 @@
 using Gameplay.Character;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class CharacterInGame : MonoBehaviour
 {
-
     #region VARIABLES
 
     [SerializeField] private Animator aniamtor;

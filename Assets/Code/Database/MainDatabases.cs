@@ -1,3 +1,4 @@
+using Database.Character;
 using UnityEngine;
 
 namespace Database
@@ -7,11 +8,15 @@ namespace Database
     {
         #region VARIABLES
 
+        [SerializeField] private CharacterDataDatabase characterDataDatabase;
+
         #endregion
 
         #region PROPERTIES
 
         public new static MainDatabases Instance => GetInstance("Singletons/MainDatabases");
+
+        public CharacterDataDatabase CharacterDataDatabase => characterDataDatabase;
 
         #endregion
 

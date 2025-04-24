@@ -1,3 +1,4 @@
+using Database.Character.Data;
 using Gameplay.Character.Movement;
 using System;
 using System.Collections.Generic;

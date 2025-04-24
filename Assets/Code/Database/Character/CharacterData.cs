@@ -1,18 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterData : MonoBehaviour
+namespace Database.Character.Data
 {
-    // Start is called before the first frame update
-    void Start()
+    [System.Serializable]
+    [CreateAssetMenu(menuName = "Data/Character/CharacterData", fileName = "CharacterData")]
+    public class CharacterData : ScriptableObject, IIdEqualable
     {
-        
-    }
+        #region VARIABLES
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private int id = Guid.NewGuid().GetHashCode();
+        [SerializeReference] private CharacterInGame characterInGamePrefab;
+
+        #endregion
+
+        #region PROPERTIES
+
+        public int Id => id;
+        public CharacterInGame CharacterInGamePrefab => characterInGamePrefab;
+
+        #endregion
+
+        #region METHODS
+
+        public bool IdEquals(int id)
+        {
+            return Id == id;
+        }
+
+        #endregion
     }
 }
