@@ -1,4 +1,5 @@
 using Gameplay.Character;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,15 @@ namespace Gameplay.Fishing
 {
     public class FishingAction
     {
+        #region ACTION
+
+        /// <summary>
+        /// Finish event with information about prevaious and next stete
+        /// </summary>
+        public event Action<FishingStateType, FishingStateType> OnChangedState;
+
+        #endregion
+
         #region VARIABLES
 
         private Dictionary<FishingStateType, FishingStateBase> states;
@@ -32,15 +42,44 @@ namespace Gameplay.Fishing
             ChangeState(FishingStateType.PREPARING);
         }
 
-        public void ChangeState(FishingStateType stateType)
+        public void ChangeState(FishingStateType stateType, params object[] parameters)
         {
-            CurrentState = states[stateType];
-            CurrentState.Initialize(this, Character, null);
+            FishingStateType oldState = CurrentState != null ? CurrentState.Type : FishingStateType.NONE;
+            CleanUpCurrentState();
+
+            if (states.TryGetValue(stateType, out var nextState))
+            {
+                CurrentState = nextState;
+                CurrentState.Initialize(this, Character, null, parameters);
+            }
+            else
+            {
+                stateType = FishingStateType.NONE;
+            }
+
+            OnChangedState?.Invoke(oldState, stateType);
+        }
+
+        public void OnUpdate()
+        {
+            if (CurrentState == null)
+                return;
+
+            CurrentState.OnUpdate();
         }
 
         private void CreateStates()
         {
+            states.Add(FishingStateType.PREPARING, new FishingState_Preparing());
+        }
 
+        private void CleanUpCurrentState()
+        {
+            if (CurrentState == null)
+                return;
+
+            CurrentState.Dispose();
+            CurrentState = null;
         }
 
         #endregion

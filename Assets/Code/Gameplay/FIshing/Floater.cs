@@ -50,7 +50,6 @@ namespace Gameplay.Fishing
                 if (hit.transform == transform) continue;
 
                 transformHit = hit.transform;
-                Debug.Log(transformHit.name);
                 return true;
             }
 

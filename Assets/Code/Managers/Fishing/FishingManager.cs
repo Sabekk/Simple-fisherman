@@ -20,6 +20,15 @@ namespace Gameplay.Fishing
 
         #endregion
 
+        #region UNITY_METHODS
+
+        private void Update()
+        {
+            FishingAction?.OnUpdate();
+        }
+
+        #endregion
+
         #region METHODS
 
         public override void Initialzie()
@@ -31,14 +40,22 @@ namespace Gameplay.Fishing
         {
             base.AttachEvents();
             if (CharacterManager.Instance)
+            {
                 CharacterManager.Instance.OnPlayerCreated += HandlePlayerCreated;
+
+                if(CharacterManager.Instance.Player!=null)
+                {
+                    DetachEventsOfPlayer();
+                    AttachEventsOfPlayer();
+                }
+            }
         }
 
         public override void DetachEvents()
         {
             base.DetachEvents();
             if (CharacterManager.Instance)
-                CharacterManager.Instance.OnPlayerCreated += HandlePlayerCreated;
+                CharacterManager.Instance.OnPlayerCreated -= HandlePlayerCreated;
 
             DetachEventsOfPlayer();
         }
@@ -48,7 +65,6 @@ namespace Gameplay.Fishing
             if (Player != null)
             {
                 Player.FishingController.FishingModule.OnPreparingAction += HandlePreparingAction;
-                Player.FishingController.FishingModule.OnTriggeredAction += HandleTriggeredAction;
             }
         }
 
@@ -57,7 +73,6 @@ namespace Gameplay.Fishing
             if (Player != null)
             {
                 Player.FishingController.FishingModule.OnPreparingAction -= HandlePreparingAction;
-                Player.FishingController.FishingModule.OnTriggeredAction -= HandleTriggeredAction;
             }
         }
 
@@ -78,11 +93,6 @@ namespace Gameplay.Fishing
         {
             if (fishingAction == null)
                 InitializeFishingAction();
-        }
-
-        private void HandleTriggeredAction()
-        {
-
         }
 
         #endregion

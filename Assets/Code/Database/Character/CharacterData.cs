@@ -13,6 +13,7 @@ namespace Database.Character.Data
 
         [SerializeField] private int id = Guid.NewGuid().GetHashCode();
         [SerializeReference] private CharacterInGame characterInGamePrefab;
+        [SerializeReference] private float maxThrowPower;
 
         #endregion
 
@@ -20,6 +21,7 @@ namespace Database.Character.Data
 
         public int Id => id;
         public CharacterInGame CharacterInGamePrefab => characterInGamePrefab;
+        public float MaxThrowPower => maxThrowPower;
 
         #endregion
 

@@ -8,15 +8,6 @@ namespace Gameplay.Fishing
 {
     public abstract class FishingStateBase : IAttachableEvents, IDisposable
     {
-        #region ACTION
-
-        /// <summary>
-        /// Finish event with information about next step
-        /// </summary>
-        public event Action<FishingStateType> OnFinish;
-
-        #endregion
-
         #region VARIABLES
 
         #endregion
@@ -32,7 +23,7 @@ namespace Gameplay.Fishing
 
         #region METHODS
 
-        public virtual void Initialize(FishingAction fishingAction, CharacterBase character, Floater floater)
+        public virtual void Initialize(FishingAction fishingAction, CharacterBase character, Floater floater, params object[] parameters)
         {
             FishingAction = fishingAction;
             Character = character;
@@ -46,16 +37,33 @@ namespace Gameplay.Fishing
             DetachEvents();
         }
 
+        public virtual void OnUpdate() { }
+
         public virtual void AttachEvents()
         {
-
+            if (Character != null)
+            {
+                Character.FishingController.FishingModule.OnPreparingAction += HandlePreparingAction;
+                Character.FishingController.FishingModule.OnTriggeredAction += HandleTriggeredAction;
+            }
         }
 
         public virtual void DetachEvents()
         {
-
+            if (Character != null)
+            {
+                Character.FishingController.FishingModule.OnPreparingAction -= HandlePreparingAction;
+                Character.FishingController.FishingModule.OnTriggeredAction -= HandleTriggeredAction;
+            }
         }
 
+
+        #region HANLDERS
+
+        protected virtual void HandlePreparingAction() { }
+        protected virtual void HandleTriggeredAction() { }
+
+        #endregion
 
         #endregion
     }
