@@ -71,6 +71,7 @@ namespace Gameplay.Fishing
         private void CreateStates()
         {
             states.Add(FishingStateType.PREPARING, new FishingState_Preparing());
+            states.Add(FishingStateType.THROWING, new FishingState_Throwing());
         }
 
         private void CleanUpCurrentState()

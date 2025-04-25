@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7788829102690450250}
   depthBeforeSubmerged: 1.03
-  displacementAmount: 15
+  displacementAmount: 3
   rotationSpeed: 50
 --- !u!54 &7788829102690450250
 Rigidbody:

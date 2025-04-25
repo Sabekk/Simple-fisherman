@@ -13,6 +13,8 @@ namespace Database.Character.Data
 
         [SerializeField] private int id = Guid.NewGuid().GetHashCode();
         [SerializeReference] private CharacterInGame characterInGamePrefab;
+        [SerializeReference] private float gainPowerSpeed;
+        [SerializeReference] private float minThrowPower;
         [SerializeReference] private float maxThrowPower;
 
         #endregion
@@ -21,7 +23,9 @@ namespace Database.Character.Data
 
         public int Id => id;
         public CharacterInGame CharacterInGamePrefab => characterInGamePrefab;
+        public float GainPowerSpeed => gainPowerSpeed;
         public float MaxThrowPower => maxThrowPower;
+        public float MinThrowPower => minThrowPower;
 
         #endregion
 

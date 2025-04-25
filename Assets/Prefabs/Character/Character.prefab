@@ -750,6 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44c09679131d98458ba3cfafff9a55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishingRod: {fileID: 7688275556101162111}
   aniamtor: {fileID: 137640269361126996}
   characterController: {fileID: 7344573589380671622}
 --- !u!95 &137640269361126996
@@ -2024,6 +2025,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee4b097b36dbd3d4c8d424b93b2cd0f3, type: 3}
+--- !u!114 &7688275556101162111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5842990239666385043, guid: ee4b097b36dbd3d4c8d424b93b2cd0f3, type: 3}
+  m_PrefabInstance: {fileID: 4297636120190596332}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0f91b13fe4c8e43a8189632ba2ee7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7965821932230546148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6136169471985264136, guid: ee4b097b36dbd3d4c8d424b93b2cd0f3, type: 3}

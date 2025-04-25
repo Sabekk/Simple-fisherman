@@ -23,11 +23,10 @@ namespace Gameplay.Fishing
 
         #region METHODS
 
-        public virtual void Initialize(FishingAction fishingAction, CharacterBase character, Floater floater, params object[] parameters)
+        public virtual void Initialize(FishingAction fishingAction, CharacterBase character, params object[] parameters)
         {
             FishingAction = fishingAction;
             Character = character;
-            Floater = floater;
 
             AttachEvents();
         }

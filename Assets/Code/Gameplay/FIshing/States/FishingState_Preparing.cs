@@ -14,22 +14,23 @@ namespace Gameplay.Fishing
         public override FishingStateType Type => FishingStateType.PREPARING;
         private float Power { get; set; }
         private float MaxPower => Character.Data.MaxThrowPower;
+        private float GainPowerSpeed => Character.Data.GainPowerSpeed;
 
         #endregion
 
         #region METHODS
 
-        public override void Initialize(FishingAction fishingAction, CharacterBase character, Floater floater, params object[] parameters)
+        public override void Initialize(FishingAction fishingAction, CharacterBase character, params object[] parameters)
         {
-            base.Initialize(fishingAction, character, floater, parameters);
-            Power = 0;
+            base.Initialize(fishingAction, character, parameters);
+            Power = Character.Data.MinThrowPower;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
             if (Power < MaxPower)
-                Power += Time.deltaTime;
+                Power += Time.deltaTime * GainPowerSpeed;
 
             if (Power > MaxPower)
                 Power = MaxPower;

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: -1813978177
   characterInGamePrefab: {fileID: 1625273281088969476, guid: 3866a2813616fa343aa11cc4060871f2, type: 3}
-  maxThrowPower: 10
+  gainPowerSpeed: 5
+  minThrowPower: 10
+  maxThrowPower: 100
