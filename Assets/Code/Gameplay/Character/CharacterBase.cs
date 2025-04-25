@@ -1,5 +1,6 @@
 using Database;
 using Database.Character.Data;
+using Gameplay.Character.Fishing;
 using Gameplay.Character.Movement;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Gameplay.Character
         [SerializeField] private int dataId;
 
         [SerializeField] protected CharacterMovementController movementController;
+        [SerializeField] protected FishingController fishingController;
 
 
         private CharacterInGame characterInGame;
@@ -42,6 +44,8 @@ namespace Gameplay.Character
         }
 
         public CharacterInGame CharacterInGame => characterInGame;
+        public CharacterMovementController MovementController => movementController;
+        public FishingController FishingController => fishingController;
 
         #endregion
 
@@ -124,6 +128,8 @@ namespace Gameplay.Character
         protected virtual void CreateControllers()
         {
             movementController = new CharacterMovementController();
+            fishingController = new FishingController();
+
         }
 
         protected virtual void SetControllers()
@@ -131,6 +137,7 @@ namespace Gameplay.Character
             controllers = new();
 
             controllers.Add(movementController);
+            controllers.Add(fishingController);
         }
 
         protected void InitializeControllers()
