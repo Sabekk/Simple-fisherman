@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gameplay.Fishing
 {
-    public class FishingAction
+    public class FishingAction : IDisposable
     {
         #region ACTION
 
@@ -42,6 +42,12 @@ namespace Gameplay.Fishing
             ChangeState(FishingStateType.PREPARING);
         }
 
+        public void Dispose()
+        {
+            CleanUpCurrentState();
+        }
+
+
         public void ChangeState(FishingStateType stateType, params object[] parameters)
         {
             FishingStateType oldState = CurrentState != null ? CurrentState.Type : FishingStateType.NONE;
@@ -49,8 +55,18 @@ namespace Gameplay.Fishing
 
             if (states.TryGetValue(stateType, out var nextState))
             {
-                CurrentState = nextState;
-                CurrentState.Initialize(this, Character, null, parameters);
+                try
+                {
+                    CurrentState = nextState;
+                    CurrentState.Initialize(this, Character, parameters);
+                    Debug.Log($"[FishingAction] current state:{CurrentState.Type}");
+
+                    CurrentState.Activate();
+                }
+                catch (System.NullReferenceException e)
+                {
+                    Debug.Log(e);
+                }
             }
             else
             {
@@ -72,6 +88,10 @@ namespace Gameplay.Fishing
         {
             states.Add(FishingStateType.PREPARING, new FishingState_Preparing());
             states.Add(FishingStateType.THROWING, new FishingState_Throwing());
+            states.Add(FishingStateType.WAITING, new FishingState_Waiting());
+            states.Add(FishingStateType.FIRST_BITE, new FishingState_FirstBite());
+            states.Add(FishingStateType.HOOKING, new FishingState_Hooking());
+            states.Add(FishingStateType.FINISHING, new FishingState_Finishing());
         }
 
         private void CleanUpCurrentState()

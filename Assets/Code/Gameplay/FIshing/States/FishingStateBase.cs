@@ -36,6 +36,7 @@ namespace Gameplay.Fishing
             DetachEvents();
         }
 
+        public virtual void Activate() { }
         public virtual void OnUpdate() { }
 
         public virtual void AttachEvents()

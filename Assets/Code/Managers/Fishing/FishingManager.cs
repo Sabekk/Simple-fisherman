@@ -1,4 +1,5 @@
 using Gameplay.Character;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,13 @@ namespace Gameplay.Fishing
 {
     public class FishingManager : GameplayManager<FishingManager>
     {
+        #region ACTIOn
+
+        public event Action OnFishingActionStarted;
+        public event Action OnFishingActionFinished;
+
+        #endregion
+
         #region VARIABLES
 
         private FishingAction fishingAction;
@@ -43,7 +51,7 @@ namespace Gameplay.Fishing
             {
                 CharacterManager.Instance.OnPlayerCreated += HandlePlayerCreated;
 
-                if(CharacterManager.Instance.Player!=null)
+                if (CharacterManager.Instance.Player != null)
                 {
                     DetachEventsOfPlayer();
                     AttachEventsOfPlayer();
@@ -58,6 +66,7 @@ namespace Gameplay.Fishing
                 CharacterManager.Instance.OnPlayerCreated -= HandlePlayerCreated;
 
             DetachEventsOfPlayer();
+            DetachEventsOfFishingAction();
         }
 
         private void AttachEventsOfPlayer()
@@ -76,10 +85,29 @@ namespace Gameplay.Fishing
             }
         }
 
+        private void AttachEventsOfFishingAction()
+        {
+            if (FishingAction == null)
+                return;
+
+            FishingAction.OnChangedState += HandleFishingActionChangedState;
+        }
+
+        private void DetachEventsOfFishingAction()
+        {
+            if (FishingAction == null)
+                return;
+
+            FishingAction.OnChangedState -= HandleFishingActionChangedState;
+        }
+
         private void InitializeFishingAction()
         {
             fishingAction = new();
-            fishingAction.Initialize(Player);
+            FishingAction.Initialize(Player);
+            AttachEventsOfFishingAction();
+
+            OnFishingActionStarted?.Invoke();
         }
 
         #region HANDLERS
@@ -93,6 +121,16 @@ namespace Gameplay.Fishing
         {
             if (fishingAction == null)
                 InitializeFishingAction();
+        }
+
+        private void HandleFishingActionChangedState(FishingStateType previousType, FishingStateType newType)
+        {
+            if (newType == FishingStateType.NONE)
+            {
+                FishingAction.Dispose();
+                DetachEventsOfFishingAction();
+                fishingAction = null;
+            }
         }
 
         #endregion

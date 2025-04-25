@@ -52,6 +52,17 @@ namespace Gameplay.Fishing
 
         #region METHODS
 
+        public void MakeBite()
+        {
+            rb.AddForce(Vector3.down, ForceMode.Impulse);
+        }
+
+        //Delete and use objectpooling
+        public void DestroyFloater()
+        {
+            Destroy(gameObject);
+        }
+
         private bool CheckFloor(out Transform transformHit)
         {
             transformHit = null;

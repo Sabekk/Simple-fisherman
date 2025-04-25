@@ -35,6 +35,11 @@ namespace Gameplay.Fishing
                 Power = Character.Data.MinThrowPower;
 
             ThrowPoint = Character.CharacterInGame.FishingRod.StartBobberPos;
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
             ThrowFloater();
         }
 
