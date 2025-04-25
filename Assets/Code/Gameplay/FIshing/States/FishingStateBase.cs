@@ -27,8 +27,6 @@ namespace Gameplay.Fishing
         {
             FishingAction = fishingAction;
             Character = character;
-
-            AttachEvents();
         }
 
         public virtual void Dispose()
@@ -36,7 +34,10 @@ namespace Gameplay.Fishing
             DetachEvents();
         }
 
-        public virtual void Activate() { }
+        public virtual void Activate()
+        {
+            AttachEvents();
+        }
         public virtual void OnUpdate() { }
 
         public virtual void AttachEvents()

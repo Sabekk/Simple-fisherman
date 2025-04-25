@@ -1,4 +1,5 @@
 using Gameplay.Character;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,9 @@ namespace Gameplay.Fishing
 {
     public class FishingState_Finishing : FishingStateBase
     {
-        #region VARIABLES
+        #region ACTION
+
+        public static event Action<bool> OnFinalizeFishing;
 
         #endregion
 
@@ -48,11 +51,12 @@ namespace Gameplay.Fishing
             base.Dispose();
             if (Floater != null)
                 Floater.DestroyFloater();
+            PublishOfResult();
         }
 
         private void PublishOfResult()
         {
-            //TODO UI
+            OnFinalizeFishing?.Invoke(Result);
         }
 
         #endregion

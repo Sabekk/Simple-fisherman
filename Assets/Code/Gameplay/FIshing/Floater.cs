@@ -10,7 +10,7 @@ namespace Gameplay.Fishing
         #region ACTION
 
         public event Action OnFloorHit;
-        public event Action OnWaterHit;
+        public event Action<bool> OnWaterHit;
 
         #endregion
 
@@ -22,12 +22,27 @@ namespace Gameplay.Fishing
         [SerializeField] private float rotationSpeed = 2f;
 
         private const string LAYER_WATER = "Water";
+        private bool isOnWater;
 
         #endregion
 
         #region PROPERTIES
 
         public Rigidbody Rigidbody => rb;
+        public bool IsOnWater
+        {
+            get
+            {
+                return isOnWater;
+            }
+            set
+            {
+                bool oldValue = isOnWater;
+                isOnWater = value;
+                if (oldValue != isOnWater)
+                    OnWaterHit?.Invoke(isOnWater);
+            }
+        }
 
         #endregion
 
@@ -39,15 +54,24 @@ namespace Gameplay.Fishing
             {
                 OnFloorHit?.Invoke();
                 if (transformHit.gameObject.layer != LayerMask.NameToLayer(LAYER_WATER))
+                {
+                    if (IsOnWater == true)
+                        IsOnWater = false;
                     return;
+                }
 
-                OnWaterHit?.Invoke();
+                if (IsOnWater == false)
+                    IsOnWater = true;
 
                 float displacementMultipler = Mathf.Clamp01(transformHit.position.y - transform.position.y / depthBeforeSubmerged) * displacementAmount;
                 rb.AddForce(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultipler, 0f), ForceMode.Acceleration);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(Vector3.zero), rotationSpeed * Time.deltaTime);
             }
-
+            else
+            {
+                if (IsOnWater == true)
+                    IsOnWater = false;
+            }
         }
 
         #endregion

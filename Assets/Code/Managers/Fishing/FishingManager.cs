@@ -39,11 +39,6 @@ namespace Gameplay.Fishing
 
         #region METHODS
 
-        public override void Initialzie()
-        {
-            base.Initialzie();
-        }
-
         public override void AttachEvents()
         {
             base.AttachEvents();

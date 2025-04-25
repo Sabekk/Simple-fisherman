@@ -47,7 +47,6 @@ namespace Gameplay.Fishing
             CleanUpCurrentState();
         }
 
-
         public void ChangeState(FishingStateType stateType, params object[] parameters)
         {
             FishingStateType oldState = CurrentState != null ? CurrentState.Type : FishingStateType.NONE;
@@ -55,18 +54,11 @@ namespace Gameplay.Fishing
 
             if (states.TryGetValue(stateType, out var nextState))
             {
-                try
-                {
-                    CurrentState = nextState;
-                    CurrentState.Initialize(this, Character, parameters);
-                    Debug.Log($"[FishingAction] current state:{CurrentState.Type}");
+                CurrentState = nextState;
+                CurrentState.Initialize(this, Character, parameters);
+                Debug.Log($"[FishingAction] current state:{CurrentState.Type}");
 
-                    CurrentState.Activate();
-                }
-                catch (System.NullReferenceException e)
-                {
-                    Debug.Log(e);
-                }
+                CurrentState.Activate();
             }
             else
             {

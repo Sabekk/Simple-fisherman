@@ -75,7 +75,7 @@ namespace Gameplay.Fishing
             if (Floater == null)
                 return;
 
-            Floater.OnWaterHit += HandleFloaterFloorHit;
+            Floater.OnFloorHit += HandleFloaterFloorHit;
         }
 
         private void DetachEventsOfFloater()
@@ -83,7 +83,7 @@ namespace Gameplay.Fishing
             if (Floater == null)
                 return;
 
-            Floater.OnWaterHit -= HandleFloaterFloorHit;
+            Floater.OnFloorHit -= HandleFloaterFloorHit;
         }
 
         #region HANDLERS

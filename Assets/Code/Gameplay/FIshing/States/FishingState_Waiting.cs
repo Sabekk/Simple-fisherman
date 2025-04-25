@@ -23,9 +23,7 @@ namespace Gameplay.Fishing
         {
             base.Initialize(fishingAction, character, parameters);
 
-            CurrentTime = 0;
-            //TODO Move to fishing setting
-            WaitingTime = Random.Range(0f, 10f);
+            ResetTimer();
 
             if (parameters.Length > 0)
             {
@@ -37,10 +35,25 @@ namespace Gameplay.Fishing
         public override void OnUpdate()
         {
             base.OnUpdate();
+            if (Floater.IsOnWater == false)
+                return;
+
             CurrentTime += Time.deltaTime;
 
             if (CurrentTime >= WaitingTime)
                 FishingAction.ChangeState(FishingStateType.FIRST_BITE, Floater);
+        }
+
+        public override void AttachEvents()
+        {
+            base.AttachEvents();
+            Floater.OnWaterHit += HandleFloaterWaterHit;
+        }
+
+        public override void DetachEvents()
+        {
+            base.DetachEvents();
+            Floater.OnWaterHit -= HandleFloaterWaterHit;
         }
 
         protected override void HandleTriggeredAction()
@@ -48,6 +61,23 @@ namespace Gameplay.Fishing
             base.HandleTriggeredAction();
             FishingAction.ChangeState(FishingStateType.FINISHING, Floater, false);
         }
+
+        private void ResetTimer()
+        {
+            CurrentTime = 0;
+            //TODO Move to fishing setting
+            WaitingTime = Random.Range(0f, 10f);
+        }
+
+        #region HANDLERS
+
+        private void HandleFloaterWaterHit(bool isOnWater)
+        {
+            if (isOnWater)
+                ResetTimer();
+        }
+
+        #endregion
 
         #endregion
     }
