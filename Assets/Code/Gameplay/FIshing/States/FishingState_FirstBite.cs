@@ -26,11 +26,10 @@ namespace Gameplay.Fishing
             base.Initialize(fishingAction, character, parameters);
 
             //TODO Move to fishing setting
-            TimeToReact = Random.Range(3f, 5f);
-            BitingTime = 1f;
+            TimeToReact = Random.Range(7f, 10f);
+            BitingTime = 3f;
 
-            //For instantly first bite action
-            CurrentBitingTime = BitingTime;
+            CurrentBitingTime = 0;
             CurrentTime = 0;
 
             if (parameters.Length > 0)
@@ -50,10 +49,10 @@ namespace Gameplay.Fishing
         {
             base.OnUpdate();
             CurrentTime += Time.deltaTime;
-
             if (CurrentTime >= TimeToReact)
                 FishingAction.ChangeState(FishingStateType.FINISHING, Floater, false);
 
+            CurrentBitingTime += Time.deltaTime;
             if (CurrentBitingTime >= BitingTime)
             {
                 StartBiteFloater();

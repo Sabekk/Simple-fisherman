@@ -10,6 +10,7 @@ namespace Gameplay.Fishing
         #region ACTION
 
         public event Action OnFloorHit;
+        public event Action OnWaterHit;
 
         #endregion
 
@@ -26,7 +27,6 @@ namespace Gameplay.Fishing
 
         #region PROPERTIES
 
-        public bool IsInWater { get; set; }
         public Rigidbody Rigidbody => rb;
 
         #endregion
@@ -38,23 +38,26 @@ namespace Gameplay.Fishing
             if (CheckFloor(out Transform transformHit) && transformHit != null)
             {
                 OnFloorHit?.Invoke();
-
                 if (transformHit.gameObject.layer != LayerMask.NameToLayer(LAYER_WATER))
                     return;
+
+                OnWaterHit?.Invoke();
 
                 float displacementMultipler = Mathf.Clamp01(transformHit.position.y - transform.position.y / depthBeforeSubmerged) * displacementAmount;
                 rb.AddForce(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultipler, 0f), ForceMode.Acceleration);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(Vector3.zero), rotationSpeed * Time.deltaTime);
             }
+
         }
 
         #endregion
 
         #region METHODS
 
+        //TODO Change to coroutine with drowing
         public void MakeBite()
         {
-            rb.AddForce(Vector3.down, ForceMode.Impulse);
+            rb.AddForce(Vector3.up, ForceMode.Impulse);
         }
 
         //Delete and use objectpooling
@@ -81,6 +84,7 @@ namespace Gameplay.Fishing
 
             return false;
         }
+
 
         #endregion
     }
