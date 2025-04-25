@@ -21,6 +21,7 @@ namespace Gameplay.Character.Movement
 
         public bool IsMoving => direction != Vector2.zero;
         public bool IsGrounded => CharacterTransform == null ? false : Physics.Raycast(CharacterTransform.position, Vector3.down, 0.1f);
+        public bool CanMove => Character.FishingController.FishingModule.IsFishing == false;
         protected Transform CharacterTransform => Character.CharacterInGame ? Character.CharacterInGame.transform : null;
         protected CharacterController CharacterController => Character.CharacterInGame != null ? Character.CharacterInGame.CharacterController : null;
 
@@ -35,8 +36,11 @@ namespace Gameplay.Character.Movement
             if (CharacterTransform == null)
                 return;
 
-            MoveCharacter();
-            RotateCharacterByLookDirection();
+            if (CanMove)
+            {
+                MoveCharacter();
+                RotateCharacterByLookDirection();
+            }
         }
 
         protected virtual void MoveCharacter()

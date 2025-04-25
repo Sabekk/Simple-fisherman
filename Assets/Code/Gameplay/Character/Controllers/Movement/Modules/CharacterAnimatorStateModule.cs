@@ -22,6 +22,7 @@ namespace Gameplay.Character.Movement
         public Animator CharacterAnimator => Character.CharacterInGame.Aniamtor;
         private int MoveDirectionX => Animator.StringToHash("MoveDirX");
         private int MoveDirectionY => Animator.StringToHash("MoveDirY");
+        private bool CanMove => Character.MovementController.MovingModule.CanMove;
 
         #endregion
 
@@ -31,8 +32,8 @@ namespace Gameplay.Character.Movement
         {
             base.OnUpdate();
 
-            currentDirX = Mathf.MoveTowards(currentDirX, dirX, animationBlendingSpeed * Time.deltaTime);
-            currentDirY = Mathf.MoveTowards(currentDirY, dirY, animationBlendingSpeed * Time.deltaTime);
+            currentDirX = CanMove == false ? 0 : Mathf.MoveTowards(currentDirX, dirX, animationBlendingSpeed * Time.deltaTime);
+            currentDirY = CanMove == false ? 0 : Mathf.MoveTowards(currentDirY, dirY, animationBlendingSpeed * Time.deltaTime);
 
             SetMovementAnimation(currentDirX, currentDirY);
         }
@@ -57,12 +58,12 @@ namespace Gameplay.Character.Movement
 
         protected virtual void HandlePreparingAction()
         {
-
+            //TODO Attach to fishing manager/fishing controller and play animations;
         }
 
         protected virtual void HandleActionTriggered()
         {
-
+            //TODO Attach to fishing manager/fishing controller and play animations;
         }
 
         #endregion
